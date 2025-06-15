@@ -8,12 +8,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: welcome
-        run: echo "Welcome to the first workflow"
       
-      - name : list files
-        run: ls
+      - name : list and readfiles
+        run: |
+          echo "welcome to github actions"
+          ls -ltra
+          cat RERADME.md
       
-      - name: Read files
-        run: cat README.md
+      - name: Generate a ASCII Artwork
+        run: cowsay "Hello, World!" >> output.txt
