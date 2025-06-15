@@ -2,7 +2,7 @@ name: Run PR Review Agent
 
 on:
   pull_request:
-    types: [opened, synchronize]  # Trigger on PR open or update
+    types: [opened, synchronize] 
 
 jobs:
   run-fun:
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Required for diffing
+          fetch-depth: 0  
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -30,6 +30,20 @@ jobs:
           git fetch origin main
           git diff origin/main...HEAD > pr_diff.txt
           cat pr_diff.txt
+     
+      - name : send mail
+        uses: dawidd6/action-send-mail@v6 
+        with:
+          host: smtp.gmail.com
+          port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "PR Review Notification"
+          to: ${{ secrets.REVIEWER_EMAIL }}
+          from: ${{ secrets.EMAIL_USERNAME }}
+          body: |
+            A new PR has been opened or updated. Please review the changes.
+            The diff is attached as pr_diff.txt.
 
       - name: Run PR review agent
         run: python3 main.py pr_diff.txt
