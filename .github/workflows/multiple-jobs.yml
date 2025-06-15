@@ -1,0 +1,41 @@
+name : multiple jobs workflow
+
+on: push
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name : install cowsay
+        run: sudo apt-get install -y cowsay
+    
+      - name : read files
+        run: |
+            cowsay "Hello, World!" > output.txt
+            echo " printing is done"
+      - name : sleep for 30 second
+        run: sleep 30
+
+
+  second-job:
+    runs-on: ubuntu-latest
+    needs: first-job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: sleep of 10 seconds
+        run : sleep 10
+              
+      - name : test file exist
+        run: grep -i "outpurt.txt" output.txt || echo "output.txt not found"
+              
+  third-job:
+    runs-on : ubuntu-latest
+    needs: [first-job, second-job]
+    steps:        
+      - name: print message
+        run: echo "All jobs completed successfully!"
