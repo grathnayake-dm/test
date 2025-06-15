@@ -16,8 +16,12 @@ jobs:
         run: |
             cowsay "Hello, World!" > output.txt
             echo " printing is done"
-      - name : sleep for 30 second
-        run: sleep 30
+
+      - name : upload output
+        uses: actions/upload-artifact@v4
+        with : 
+            name: output
+            path : output.txt
 
 
   second-job:
@@ -27,8 +31,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: sleep of 10 seconds
-        run : sleep 10
+      - name : download output text file
+        uses: actions/download-artifact@v4
+        with : 
+            name: output
               
       - name : test file exist
         run: grep -i "outpurt.txt" output.txt || echo "output.txt not found"
