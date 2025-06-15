@@ -8,14 +8,9 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+            
+            - name : listing repos
+              run: ls -ltra
 
-            - name: Install cowsay
-              run: sudo apt-get install -y cowsay
-
-            - name: Generate ASCII Artwork
-              run: |
-                echo "Generating ASCII Artwork..."
-                cowsay "Hello, World!" > output.txt
-
-            - name: Display Output
-              run: cat output.txt
+            - name: Executing Shell Script
+              run: ./ascii-script.sh
