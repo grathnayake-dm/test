@@ -18,6 +18,11 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+          pip install -r requirements.txt
+
       - name: Get code diff
         id: diff
         run: |
