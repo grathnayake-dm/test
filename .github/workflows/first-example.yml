@@ -13,7 +13,7 @@ jobs:
         run: |
           echo "welcome to github actions"
           ls -ltra
-          cat RERADME.md
+          cat README.md
       
       - name: Generate a ASCII Artwork
         run: cowsay "Hello, World!" >> output.txt
