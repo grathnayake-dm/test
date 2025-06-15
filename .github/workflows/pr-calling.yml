@@ -30,20 +30,12 @@ jobs:
           git fetch origin main
           git diff origin/main...HEAD > pr_diff.txt
           cat pr_diff.txt
-     
-      - name : send mail
-        uses: dawidd6/action-send-mail@v6 
-        with:
-          host: smtp.gmail.com
-          port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "PR Review Notification"
-          to: ${{ secrets.REVIEWER_EMAIL }}
-          from: ${{ secrets.EMAIL_USERNAME }}
-          body: |
-            A new PR has been opened or updated. Please review the changes.
-            The diff is attached as pr_diff.txt.
 
       - name: Run PR review agent
         run: python3 main.py pr_diff.txt
+
+      - name: Upload review summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-review-summary
+          path: review_summary.txt
