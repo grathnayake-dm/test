@@ -39,3 +39,26 @@ jobs:
         with:
           name: pr-review-summary
           path: review_summary.txt
+
+
+      - name: Send PR summary email
+        uses: dawidd6/action-send-mail@v6
+        with:
+            server_address: smtp.gmail.com
+            server_port: 587
+            secure: true
+            username: ${{ secrets.EMAIL_USERNAME }}
+            password: ${{ secrets.EMAIL_PASSWORD }}
+            subject: "AI Review for PR #${{ github.event.pull_request.number }}"
+            to: ${{ secrets.REVIEWER_EMAIL }}
+            from: ${{ secrets.EMAIL_USERNAME }}
+            body: |
+                A new PR has been submitted or updated.
+
+                PR Title: ${{ github.event.pull_request.title }}
+                PR Link: ${{ github.event.pull_request.html_url }}
+
+                Attached is the AI-generated review summary.
+            attachments: review_summary.txt
+
+        
