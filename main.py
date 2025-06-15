@@ -2,7 +2,7 @@ import sys
 from google import genai
 
 def call_llm(text):
-    client = genai.Client(api_key="your_api_key_here")
+    client = genai.Client(api_key="AIzaSyCcwBMe3uxcWLN2OSsK7cQx41I93-T3AW0")
 
     response = client.models.generate_content(
         model="gemini-2.0-flash",
