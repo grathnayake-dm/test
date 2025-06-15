@@ -1,6 +1,7 @@
 import sys
 from google import genai
 
+
 def call_llm(text):
     client = genai.Client(api_key="AIzaSyCcwBMe3uxcWLN2OSsK7cQx41I93-T3AW0")
 
@@ -15,12 +16,14 @@ def call_llm(text):
     with open("review_summary.txt", "w") as f:
         f.write(output)
 
+
 def run(diff_path):
     with open(diff_path, 'r') as f:
         diff = f.read()
     print("🧠 Reviewing PR diff...")
     call_llm(diff)
     print("✅ Review complete.")
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
