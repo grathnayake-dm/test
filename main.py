@@ -22,6 +22,7 @@ def run(diff_path):
         diff = f.read()
     print("🧠 Reviewing PR diff...")
     call_llm(diff)
+    
     print("✅ Review complete.")
 
 
