@@ -20,6 +20,7 @@ def call_llm(text):
 def run(diff_path):
     with open(diff_path, 'r') as f:
         diff = f.read()
+        
     print("🧠 Reviewing PR diff...")
     call_llm(diff)
     
