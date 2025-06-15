@@ -12,5 +12,3 @@ jobs:
         - name: List files
           run: ls -ltra
   
-        - name: Run Python script
-          run: python3 -c "from main import run; run()"
