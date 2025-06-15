@@ -1,0 +1,21 @@
+name: Ascii Artwork Generation
+
+on: push
+
+jobs:
+    ascii_job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install cowsay
+              run: sudo apt-get install -y cowsay
+
+            - name: Generate ASCII Artwork
+              run: |
+                echo "Generating ASCII Artwork..."
+                cowsay "Hello, World!" > output.txt
+
+            - name: Display Output
+              run: cat output.txt
