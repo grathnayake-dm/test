@@ -4,7 +4,9 @@ import sys
 def run(diff_path):
     with open(diff_path, 'r') as f:
         diff = f.read()
+
     print("🧠 Reviewing PR diff...")
+    
     
     print(diff)  
 
