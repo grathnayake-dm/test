@@ -42,7 +42,6 @@ jobs:
           name: pr-review-summary
           path: review_summary.txt
 
-
       - name: Send PR summary email
         uses: dawidd6/action-send-mail@v6
         with:
