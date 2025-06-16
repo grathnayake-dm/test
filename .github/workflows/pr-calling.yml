@@ -2,7 +2,7 @@ name: Run PR Review Agent
 
 on:
   pull_request:
-    types: [opened, synchronize]  # Trigger on PR open or update
+    types: [opened, synchronize] 
 
 jobs:
   run-fun:
@@ -11,12 +11,17 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Required for diffing
+          fetch-depth: 0  
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+          pip install -r requirements.txt
 
       - name: Get code diff
         id: diff
@@ -28,3 +33,33 @@ jobs:
 
       - name: Run PR review agent
         run: python3 main.py pr_diff.txt
+        env: 
+            GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY}}
+
+      - name: Upload review summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-review-summary
+          path: review_summary.txt
+
+      - name: Send PR summary email
+        uses: dawidd6/action-send-mail@v6
+        with:
+            server_address: smtp.gmail.com
+            server_port: 587
+            secure: false
+            username: ${{ secrets.EMAIL_USERNAME }}
+            password: ${{ secrets.EMAIL_PASSWORD }}
+            subject: "AI Review for PR #${{ github.event.pull_request.number }}"
+            to: ${{ secrets.REVIEWER_EMAIL }}
+            from: ${{ secrets.EMAIL_USERNAME }}
+            body: |
+                A new PR has been submitted or updated.
+
+                PR Title: ${{ github.event.pull_request.title }}
+                PR Link: ${{ github.event.pull_request.html_url }}
+
+                Attached is the AI-generated review summary.
+            attachments: review_summary.txt
+
+        
