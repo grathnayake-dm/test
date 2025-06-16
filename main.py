@@ -2,10 +2,9 @@
 import sys
 
 def run(diff_path):
-    with open(diff_path, 'r') as f:
-        diff = f.read()
-    print("🧠 Reviewing PR diff...")
-    
+    with open(diff_path, 'r') as f:        
+        diff = f.read()        
+    print("🧠 Reviewing Pull Request difff...")    
     print(diff)  
 
 if __name__ == "__main__":
