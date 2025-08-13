@@ -15,6 +15,5 @@ if __name__ == "__main__":
 
         print("❌ No diff file provided.")
 
-    else:
-        
+    else:        
         run(sys.argv[1])
