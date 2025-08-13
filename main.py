@@ -9,6 +9,6 @@ def run(diff_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("❌ No diff file provided.")
+        print("❌ No diff file provided_test.")
     else:
         run(sys.argv[1])
